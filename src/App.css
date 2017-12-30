@@ -39,6 +39,11 @@
  padding: 0;
 }
 
+.flower {
+  height: 70px;
+  width: 70px;
+}
+
 .tile-blank {
   vertical-align: top;
   background: transparent;
