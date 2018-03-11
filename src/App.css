@@ -17,10 +17,25 @@
   transform: translate(-50%, -50%);
 }
 
+.player-1-nonactive-container {
+  background: transparent;
+  position: fixed;
+  top: 10px;
+  left: 23%;
+
+}
+
+.player-2-nonactive-container {
+  background: transparent;
+  position: fixed;
+  bottom: 10px;
+  left: 23%;
+}
+
 .game-board {
   background: #cbcbcb;
   position: fixed;
-  height: 60%;
+  height: 70%;
   width: 100%;
   top: 43%;
   left: 50%;
@@ -39,7 +54,7 @@
  padding: 0;
 }
 
-.flower {
+.tile-decal {
   height: 70px;
   width: 70px;
 }

@@ -1,12 +1,33 @@
 import React from "react";
-import TileContainer from './TileContainer.js'
+import TileContainer from './TileContainer.js';
+import DiceContainer from './DiceContainer.js';
+import GameStateManager from "./GameStateManager";
 
 class Gameboard extends React.Component{
+    constructor() {
+        super();
+
+        this.state = { 
+        }
+    }
+
+    moveMarker() {
+
+    }
+
+    moveMarkerCallback(markerToMove) {
+
+    }
+
+    rollCallback(roll) {
+        this.game_state_manager.recieveRoll(roll);
+    }
 
     render() {
         return (
-            <div class='game-board'>
-                <TileContainer gameInfoMsgCallback={this.props.gameInfoMsgCallback.bind(this)} />
+            <div >
+                <TileContainer moveMarker={this.state.markerToMove} />
+                <DiceContainer />
             </div>
         );
 
