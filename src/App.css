@@ -2,10 +2,15 @@
   font-family: sans-serif;
 }
 
+p {
+  margin: 0;
+}
+
 .game-info {
   position: fixed;
-  top: 70%;
-  margin: 20px;
+  top: 78.5%;
+  margin-left: 10px;
+
 }
 
 .tile-container {
@@ -39,7 +44,6 @@
   width: 100%;
   top: 43%;
   left: 50%;
-  margin-right: -50%;
   transform: translate(-50%, -50%);
 }
 
