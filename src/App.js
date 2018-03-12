@@ -6,9 +6,7 @@ import Gameinfo from './components/Gameinfo.js';
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      message: null
-    }
+    
 
   }
 
@@ -20,7 +18,7 @@ class App extends React.Component {
     return (
       <div>
         <Gameboard gameInfoMsgCallback={ this.gameInfoMsgCallback.bind(this) } />
-        <Gameinfo msg={ this.state.message } />
+        <Gameinfo />
       </div>
     );
   }

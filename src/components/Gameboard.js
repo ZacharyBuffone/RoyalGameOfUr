@@ -11,18 +11,6 @@ class Gameboard extends React.Component{
         }
     }
 
-    moveMarker() {
-
-    }
-
-    moveMarkerCallback(markerToMove) {
-
-    }
-
-    rollCallback(roll) {
-        this.game_state_manager.recieveRoll(roll);
-    }
-
     render() {
         return (
             <div >

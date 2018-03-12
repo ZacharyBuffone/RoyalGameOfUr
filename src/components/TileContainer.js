@@ -8,7 +8,6 @@ class TileContainer extends React.Component {
 
         this.state = {
             //todo: move this to class
-            //todo: move tile objects to class
             player_1_marker_pos: [0,0,0,0,0,0,0],   //list of marker positions
             player_2_marker_pos: [0,0,0,0,0,0,0],   // ''
             tile_click_chord: [null, null, null]    //marker, player, tile
