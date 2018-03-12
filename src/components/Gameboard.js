@@ -1,7 +1,6 @@
 import React from "react";
 import TileContainer from './TileContainer.js';
 import DiceContainer from './DiceContainer.js';
-import GameStateManager from "./GameStateManager";
 
 class Gameboard extends React.Component{
     constructor() {

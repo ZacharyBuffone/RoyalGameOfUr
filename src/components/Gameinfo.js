@@ -12,7 +12,7 @@ class Gameinfo extends React.Component{
     }
 
     componentWillMount(){
-        MessageStore.on("change", () => {
+        MessageStore.on("MESSAGE", () => {
 
             this.setState(MessageStore.getAll());
         });
@@ -23,25 +23,19 @@ class Gameinfo extends React.Component{
     getMessageString() {
         var buffer = [];
 
-        var num_shown = 0;
-        var i = this.state.messages.length - 1;
+        var end_at = this.clampLower(this.state.messages.length - this.MAX_MSGS, 0);
         //only show the last MAX_MSGS messages.
-        while(num_shown < this.MAX_MSGS && i >= 0) {
+        for(let i = this.state.messages.length - 1; i >= end_at; i--) {
             buffer.push(<p>{this.state.messages[i].text}</p>);
-            num_shown++;
-            i--;
         }
 
         return buffer;
     }
 
-    clamp(num, min, max) {
+    clampLower(num, min) {
         if(num < min)
             return min;
-        else if(num > max)
-            return max;
-        else
-            return num;
+        return num;
     }
 
     render() {

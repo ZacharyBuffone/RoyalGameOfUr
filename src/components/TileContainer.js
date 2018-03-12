@@ -16,12 +16,12 @@ class TileContainer extends React.Component {
     }
 
     tileClickedCallback(target) {
-        //target highlighted, unhighlighted
-        if(target.props.highlighted) {
+        //target selected, unhighlighted
+        if(target.props.selected &&  (target.props.type.includes("player1") || target.props.type.includes("player2"))) {
             this.setState({tile_click_chord: [null, null, null]});
         }
         //target is marker, highlight
-        if(target.props.type.includes("player1") || target.props.type.includes("player2")) {
+        else if(target.props.type.includes("player1") || target.props.type.includes("player2")) {
             var player = this.getPlayerFromTile(target);
             this.setState({tile_click_chord: [target.value, player, null]})
         }
@@ -38,7 +38,7 @@ class TileContainer extends React.Component {
         var number = 0;
         for (var type in tile.props.type) {
             if(type === "player1" || type === "player2") {
-                number = parseInt(type.substr(6));
+                number = parseInt(type.substr(6), 10);
                 break;
             }
         }

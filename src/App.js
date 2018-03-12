@@ -4,11 +4,6 @@ import Gameboard from './components/Gameboard.js';
 import Gameinfo from './components/Gameinfo.js';
 
 class App extends React.Component {
-  constructor() {
-    super();
-    
-
-  }
 
   gameInfoMsgCallback(msg) {
     this.setState({message: msg});

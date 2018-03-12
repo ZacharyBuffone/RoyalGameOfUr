@@ -28,7 +28,7 @@ class MessageStore extends EventEmitter {
                 text: msg
             }
         );
-        this.emit("change");
+        this.emit("MESSAGE");
         return;
     }
 
