@@ -6,24 +6,28 @@
 //[6]if marker lands of flower, goto [1], else ->
 //[7]goto [1] with other player
 import * as MessageAction from "./actions/MessageAction";
-
-var GameStateEnum = Object.freeze({roll:1, move_marker:2})
-var PlayerEnum = Object.freeze({player1:1, player2:2})
+import * as GameStateCommandAction from './actions/GameStateCommandAction'
 
 class GameStateManager {
     constructor() {
-        this.game_state = GameStateEnum.roll;
-        this.whose_turn = PlayerEnum.player1;
+        this.GameStateEnum = Object.freeze({roll:1, move_marker:2})
+        this.PlayerEnum = Object.freeze({player1:1, player2:2})
+
+        this.game_state = this.GameStateEnum.roll;
+        this.whose_turn = this.PlayerEnum.player1;
         this.player1_pos = [0,0,0,0,0,0,0];
         this.player2_pos = [0,0,0,0,0,0,0];
         this.last_roll = [];
+
+        GameStateCommandAction.commandMarkerPosChange(this.PlayerEnum.player1, this.player1_pos);
+        GameStateCommandAction.commandMarkerPosChange(this.PlayerEnum.player2, this.player2_pos);
         
         return;
     }
 
     requestRoll() {
         //if game_state is NOT roll, message and do nothing.
-        if(this.game_state !== GameStateEnum.roll)
+        if(this.game_state !== this.GameStateEnum.roll)
         {
             MessageAction.addGameInfoMessage("You can not roll the dice right now.");
             return;
@@ -35,7 +39,7 @@ class GameStateManager {
             this.last_roll[i] = Math.round(Math.random());
         }
 
-        this.game_state = GameStateEnum.move_marker;
+        this.game_state = this.GameStateEnum.move_marker;
 
         MessageAction.addGameInfoMessage("You rolled: " + this.last_roll.toString());
         return;
@@ -44,6 +48,8 @@ class GameStateManager {
     requestMarkerMove(request) {
         
     }
+
+
 }
 
 const gameStateManager = new GameStateManager();

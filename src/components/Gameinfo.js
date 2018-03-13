@@ -23,7 +23,9 @@ class Gameinfo extends React.Component{
 
         var end_at = this.clampLower(this.state.messages.length - this.MAX_MSGS, 0);
         //only show the last MAX_MSGS messages.
-        buffer.push(<p>{"=> " + this.state.messages[this.state.messages.length - 1].text}</p>);
+        if(this.state.messages.length > 0) {
+            buffer.push(<p>{"=> " + this.state.messages[this.state.messages.length - 1].text}</p>);
+        }
         for(let i = this.state.messages.length - 2; i >= 0; i--) {
             buffer.push(<p>{this.state.messages[i].text}</p>);
             

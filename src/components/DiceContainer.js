@@ -1,5 +1,4 @@
 import React from 'react';
-import * as MessageAction from "../actions/MessageAction";
 import GameStateManager from "../GameStateManager";
 class DiceContainer extends React.Component {
 

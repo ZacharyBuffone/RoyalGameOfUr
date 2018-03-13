@@ -5,42 +5,22 @@ class MessageStore extends EventEmitter {
     constructor() {
         super();
 
-        this.messages = [
-            {
-                id: 0,
-                text: "This is a message."
-            },
-            {
-                id: 1,
-                text: "This is another message."
-            }
-        ];
+        this.messages = [];
 
-        this.id_count = 1;
+        this.id_count = this.messages.length + 1;
         return;
     }
 
     addMessage(msg) {
-        this.id_count += 1;
+        
         this.messages.push(
             {
                 id: this.id_count,
                 text: msg
             }
         );
+        this.id_count += 1;
         this.emit("MESSAGE");
-        return;
-    }
-
-    handleActions(action) {
-        switch(action.type) {
-            case "MESSAGE":
-                this.addMessage(action.text);
-                break;
-            default:
-                break;
-        }
-
         return;
     }
 
@@ -51,9 +31,16 @@ class MessageStore extends EventEmitter {
 }
 
 const messageStore = new MessageStore();
-window.MessageStore = messageStore;
 
-dispatcher.register(messageStore.handleActions.bind(messageStore));
-window.dispatcher = dispatcher;
+dispatcher.register((payload) => {
+    switch(payload.type) {
+        case "MESSAGE":
+            messageStore.addMessage(payload.text);
+            break;
+        default:
+            break;
+    }
+
+});
 
 export default messageStore;

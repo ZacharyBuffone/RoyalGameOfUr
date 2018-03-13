@@ -1,5 +1,8 @@
 import React from "react";
 import Tile from './Tile.js'
+import GameStateCommandStore from '../stores/GameStateCommandStore'
+import  GameStateManager from '../GameStateManager'
+
 //grey = player1
 //beige = player2
 class TileContainer extends React.Component {
@@ -7,31 +10,35 @@ class TileContainer extends React.Component {
         super();
 
         this.state = {
-            //todo: move this to class
-            player_1_marker_pos: [0,0,0,0,0,0,0],   //list of marker positions
-            player_2_marker_pos: [0,0,0,0,0,0,0],   // ''
-            tile_click_chord: [null, null, null]    //marker, player, tile
+            player_1_marker_pos: [],   //list of marker positions
+            player_2_marker_pos: []   // ''
+            
         };
 
     }
 
-    tileClickedCallback(target) {
-        //target selected, unhighlighted
-        if(target.props.selected &&  (target.props.type.includes("player1") || target.props.type.includes("player2"))) {
-            this.setState({tile_click_chord: [null, null, null]});
-        }
-        //target is marker, highlight
-        else if(target.props.type.includes("player1") || target.props.type.includes("player2")) {
-            var player = this.getPlayerFromTile(target);
-            this.setState({tile_click_chord: [target.value, player, null]})
-        }
-        //target is tile
-        if(!(target.props.type.includes("player1") && target.props.type.includes("player2"))){
-            this.setState({
-                tile_click_chord: [this.state.tile_click_chord[0], this.state.tile_click_chord[1], target.props.value]
-            });
-        }
+    componentDidMount() {
+        GameStateCommandStore.on("GSC_MARKER_POS_CHANGE", () => {
+            //TODO: GameStateCommandStore emitting GSC_MARKER_POS_CHANGE not invoking callback
+            var change = GameStateCommandStore.getLastCommand;
+            if(change.player === GameStateManager.PlayerEnum.player1) {
+                this.setState({
+                    player_1_marker_pos: change.pos
+                });  
+            }
+            else {
+                this.setState({
+                    player_2_marker_pos: change.pos
+                });
+            }
+        });
 
+        return;
+    }
+
+
+    tileClickedCallback(target) {
+        return;
     }
 
     getPlayerfromTile(tile) {
