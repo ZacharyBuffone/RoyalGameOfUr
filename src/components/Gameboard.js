@@ -3,17 +3,10 @@ import TileContainer from './TileContainer.js';
 import DiceContainer from './DiceContainer.js';
 
 class Gameboard extends React.Component{
-    constructor() {
-        super();
-
-        this.state = { 
-        }
-    }
-
     render() {
         return (
             <div >
-                <TileContainer moveMarker={this.state.markerToMove} />
+                <TileContainer />
                 <DiceContainer />
             </div>
         );

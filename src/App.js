@@ -5,18 +5,15 @@ import Gameinfo from './components/Gameinfo.js';
 
 class App extends React.Component {
 
-  gameInfoMsgCallback(msg) {
-    this.setState({message: msg});
-  }
-
   render() {
     return (
       <div>
-        <Gameboard gameInfoMsgCallback={ this.gameInfoMsgCallback.bind(this) } />
+        <Gameboard  />
         <Gameinfo />
       </div>
     );
   }
 }
+
 
 export default App;

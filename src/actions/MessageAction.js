@@ -5,4 +5,5 @@ export function addGameInfoMessage(msg) {
         type: "MESSAGE",
         text: msg
     });
+
 };
