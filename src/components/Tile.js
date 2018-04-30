@@ -8,7 +8,7 @@ import beige_marker_highlighted_img from '../img/beige_marker_highlighted.svg';
 class Tile extends React.Component {
 
     handleClick(e) {
-        
+        this.props.tileClickCallback(this.props.value, this.props.type)
     }
 
     render() {
@@ -17,10 +17,20 @@ class Tile extends React.Component {
             button_value = (<img class='tile-decal' src={flower_img} alt='flower' />);
         }
         if(this.props.type.includes('player1')){
-            button_value = (<img class='tile-decal' src={grey_marker_img} alt='player1' />);
+            if(this.props.type.includes('highlighted')) {
+                button_value = (<img class='tile-decal' src={grey_marker_highlighted_img} alt='player1' />);
+            }
+            else {
+                button_value = (<img class='tile-decal' src={grey_marker_img} alt='player1' />);
+            }
         }
         if(this.props.type.includes('player2')){
-            button_value = (<img class='tile-decal' src={beige_marker_img} alt='player2' />);
+            if(this.props.type.includes('highlighted')) {
+                button_value = (<img class='tile-decal' src={beige_marker_highlighted_img} alt='player2' />);
+            }
+            else {
+                button_value = (<img class='tile-decal' src={beige_marker_img} alt='player2' />);
+            }
         }
 
         return (

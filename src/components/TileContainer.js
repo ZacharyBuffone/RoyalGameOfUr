@@ -10,8 +10,10 @@ class TileContainer extends React.Component {
         super();
 
         this.state = {
-            player_1_marker_pos: [],   //list of marker positions
-            player_2_marker_pos: []    // ''
+            player_1_marker_pos: [],                 //list of marker positions
+            player_2_marker_pos: [],                 // ''
+            tile_click_chord: [[null, null], null],  //[[first tile, player], second_tile]
+            highlighted_marker: null                 //marker which is highlighted
             
         };
 
@@ -28,7 +30,6 @@ class TileContainer extends React.Component {
     }
 
     getLastMarkerPosChangeCommand() {
-        //TODO: GameStateCommandStore emitting GSC_MARKER_POS_CHANGE not invoking callback
         var command = GameStateCommandStore.getLastUndoneCommandOfType("GSC_MARKER_POS_CHANGE");
         if(command.player === GameStateManager.PlayerEnum.player1) {
             this.setState({
@@ -42,11 +43,31 @@ class TileContainer extends React.Component {
         }
 
         GameStateCommandStore.done(command.id);
-
         return;
     }
 
-    tileClickedCallback() {
+    tileClickedCallback(value, type) {
+        if(type.includes('player1')) {
+            this.setState({
+                tile_click_chord: [[value, 1], null],
+                highlighted_marker: value
+            });
+
+        }
+        else if(type.includes('player2')) {
+            this.setState((prevState) => {
+                return ({
+                    tile_click_chord: [[value, 2], null],
+                    highlighted_marker: value
+                });
+            });
+        }
+        else {
+            this.setState({
+                tile_click_chord: [this.state.tile_click_chord[0], value],
+                highlighted_marker: null
+            })
+        }
         return;
     }
 
@@ -61,13 +82,15 @@ class TileContainer extends React.Component {
         return number;
     }
 
-
     renderTile(value, type) {
         if(this.state.player_1_marker_pos.includes(value) && this.state.player_1_marker_pos.includes(value) !== 0) {
             type.push('player1');
         }
-        if(this.state.player_2_marker_pos.includes(value) && this.state.player_2_marker_pos.includes(value) !== 0) {
+        else if(this.state.player_2_marker_pos.includes(value) && this.state.player_2_marker_pos.includes(value) !== 0) {
             type.push('player2');
+        }
+        if(this.state.highlighted_marker === value) {
+            type.push('highlighted');
         }
 
         return (<Tile value={value} type={type} tileClickCallback={this.tileClickedCallback.bind(this)} />);
@@ -86,7 +109,6 @@ class TileContainer extends React.Component {
                 buffer.push(<Tile value='0' type={'player'+player} tileClickCallback={this.tileClickedCallback.bind(this)} />);
             }
         }
-        console.log(buffer);
 
         return buffer;
     }
@@ -97,7 +119,7 @@ class TileContainer extends React.Component {
             <div class='game-board'>
                 
                 <div class='player-1-nonactive-container'>
-                    { this.renderNonactiveTiles(1) }
+                    { this.renderNonactiveTiles(1) } 
                 </div>
 
                 <div class='tile-container'>

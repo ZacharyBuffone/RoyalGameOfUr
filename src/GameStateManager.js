@@ -18,6 +18,8 @@ class GameStateManager {
         this.whose_turn = this.PlayerEnum.player1;
         this.player1_pos = [0,0,0,0,0,0,0];
         this.player2_pos = [0,0,0,0,0,0,0];
+        this.player1_score = 0;
+        this.player2_score = 0;
         this.last_roll = [];
 
         GameStateCommandAction.commandMarkerPosChange(this.PlayerEnum.player1, this.player1_pos);

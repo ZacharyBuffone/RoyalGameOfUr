@@ -42,6 +42,7 @@ class GameStateCommandStore extends EventEmitter {
         return null;
     }
 
+    //when a command has been fulfilled, this func must be called to mark it as done
     done(id) {
         var command;
         for(var i = this.commands.length - 1; i >= 0; i--) {
