@@ -12,7 +12,9 @@ class TileContainer extends React.Component {
         this.state = {
             player_1_marker_pos: [],                 //list of marker positions
             player_2_marker_pos: [],                 // ''
-            tile_click_chord: [[null, null], null],  //[[first tile, player], second_tile]
+            tile_click_chord_first: null,            //specifies which tile was clicked first
+            tile_click_chord_second: null,           //                tile was clicked second
+            tile_click_chord_player: null,           //                player first tile belonged to.
             highlighted_marker: null                 //marker which is highlighted
             
         };
@@ -20,7 +22,7 @@ class TileContainer extends React.Component {
     }
 
     componentDidMount() {
-        GameStateCommandStore.on("GSC_MARKER_POS_CHANGE", 
+        GameStateCommandStore.on("MARKER_POS_CHANGE", 
             this.getLastMarkerPosChangeCommand.bind(this));
 
         this.getLastMarkerPosChangeCommand();
@@ -30,7 +32,7 @@ class TileContainer extends React.Component {
     }
 
     getLastMarkerPosChangeCommand() {
-        var command = GameStateCommandStore.getLastUndoneCommandOfType("GSC_MARKER_POS_CHANGE");
+        var command = GameStateCommandStore.getLastUndoneCommandOfType("MARKER_POS_CHANGE");
         if(command.player === GameStateManager.PlayerEnum.player1) {
             this.setState({
                 player_1_marker_pos: command.pos
@@ -41,33 +43,45 @@ class TileContainer extends React.Component {
                 player_2_marker_pos: command.pos
             });
         }
-
         GameStateCommandStore.done(command.id);
         return;
     }
 
     tileClickedCallback(value, type) {
         if(type.includes('player1')) {
-            this.setState({
-                tile_click_chord: [[value, 1], null],
-                highlighted_marker: value
+            this.setState((prevState) => {
+                return ({
+                    tile_click_chord_first: value,
+                    tile_click_chord_player: 1,
+                    tile_click_chord_second: null,
+                    highlighted_marker: value
+                });
             });
-
         }
         else if(type.includes('player2')) {
             this.setState((prevState) => {
                 return ({
-                    tile_click_chord: [[value, 2], null],
+                    tile_click_chord_first: value,
+                    tile_click_chord_player: 2,
+                    tile_click_chord_second: null,
                     highlighted_marker: value
                 });
             });
         }
         else {
-            this.setState({
-                tile_click_chord: [this.state.tile_click_chord[0], value],
-                highlighted_marker: null
-            })
+            GameStateManager.requestMarkerMove(parseInt(this.state.tile_click_chord_first, 10),
+                parseInt(value, 10),
+                this.state.tile_click_chord_player);
+            this.setState((prevState) => {
+                return ({
+                    tile_click_chord_first: null,
+                    tile_click_chord_player:null,
+                    tile_click_chord_second: null,
+                    highlighted_marker: null
+                });
+            });
         }
+
         return;
     }
 
@@ -106,7 +120,13 @@ class TileContainer extends React.Component {
 
         for(var i = 0; i < 7; i++) {
             if(marker_list[i] === 0) {
-                buffer.push(<Tile value='0' type={'player'+player} tileClickCallback={this.tileClickedCallback.bind(this)} />);
+                var type = [];
+                if(this.state.tile_click_chord_player === 0 && this.state.tile_click_chord_player === player) {
+                    type.push('highlighted');
+                }
+                type.push('player'+player);
+
+                buffer.push(<Tile value='0' type={type} tileClickCallback={this.tileClickedCallback.bind(this)} />);
             }
         }
 

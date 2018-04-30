@@ -19,7 +19,7 @@ class MessageStore extends EventEmitter {
                 text: msg
             }
         );
-        this.id_count += 1;
+        this.id_count++;
         this.emit("MESSAGE");
         return;
     }

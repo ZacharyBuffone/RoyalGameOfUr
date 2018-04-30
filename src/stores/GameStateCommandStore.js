@@ -17,10 +17,9 @@ class GameStateCommandStore extends EventEmitter {
             player: command.player,
             pos: command.pos,
             done: false
-
         });
-        
-        this.emit("GSC_MARKER_POS_CHANGE");
+        this.id_count++;
+        this.emit("MARKER_POS_CHANGE");
         return;
     }
 
@@ -51,6 +50,8 @@ class GameStateCommandStore extends EventEmitter {
                 this.commands[i].done = true;
             }
         }
+
+        return;
     }
 
 }
@@ -59,7 +60,7 @@ const gameStateCommandStore = new GameStateCommandStore();
 
 Dispatcher.register((payload) => {
     switch(payload.type) {
-        case "GSC_MARKER_POS_CHANGE":
+        case "MARKER_POS_CHANGE":
             gameStateCommandStore.addMarkerPosChangeCommand(payload);
             break;
         default:
