@@ -11,33 +11,42 @@ class TileContainer extends React.Component {
 
         this.state = {
             player_1_marker_pos: [],   //list of marker positions
-            player_2_marker_pos: []   // ''
+            player_2_marker_pos: []    // ''
             
         };
 
     }
 
     componentDidMount() {
-        GameStateCommandStore.on("GSC_MARKER_POS_CHANGE", () => {
-            //TODO: GameStateCommandStore emitting GSC_MARKER_POS_CHANGE not invoking callback
-            var change = GameStateCommandStore.getLastCommand;
-            if(change.player === GameStateManager.PlayerEnum.player1) {
-                this.setState({
-                    player_1_marker_pos: change.pos
-                });  
-            }
-            else {
-                this.setState({
-                    player_2_marker_pos: change.pos
-                });
-            }
-        });
+        GameStateCommandStore.on("GSC_MARKER_POS_CHANGE", 
+            this.getLastMarkerPosChangeCommand.bind(this));
+
+        this.getLastMarkerPosChangeCommand();
+        this.getLastMarkerPosChangeCommand();
 
         return;
     }
 
+    getLastMarkerPosChangeCommand() {
+        //TODO: GameStateCommandStore emitting GSC_MARKER_POS_CHANGE not invoking callback
+        var command = GameStateCommandStore.getLastUndoneCommandOfType("GSC_MARKER_POS_CHANGE");
+        if(command.player === GameStateManager.PlayerEnum.player1) {
+            this.setState({
+                player_1_marker_pos: command.pos
+            });  
+        }
+        else {
+            this.setState({
+                player_2_marker_pos: command.pos
+            });
+        }
 
-    tileClickedCallback(target) {
+        GameStateCommandStore.done(command.id);
+
+        return;
+    }
+
+    tileClickedCallback() {
         return;
     }
 
@@ -77,13 +86,13 @@ class TileContainer extends React.Component {
                 buffer.push(<Tile value='0' type={'player'+player} tileClickCallback={this.tileClickedCallback.bind(this)} />);
             }
         }
+        console.log(buffer);
 
         return buffer;
     }
 
 
     render() {
-        
         return (
             <div class='game-board'>
                 

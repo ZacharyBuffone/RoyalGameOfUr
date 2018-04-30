@@ -5,13 +5,14 @@
 //[5]if player has 7 points, player wins and exit, else ->
 //[6]if marker lands of flower, goto [1], else ->
 //[7]goto [1] with other player
+
 import * as MessageAction from "./actions/MessageAction";
 import * as GameStateCommandAction from './actions/GameStateCommandAction'
 
 class GameStateManager {
     constructor() {
-        this.GameStateEnum = Object.freeze({roll:1, move_marker:2})
-        this.PlayerEnum = Object.freeze({player1:1, player2:2})
+        this.GameStateEnum = Object.freeze({roll:1, move_marker:2});
+        this.PlayerEnum = Object.freeze({player1:1, player2:2});
 
         this.game_state = this.GameStateEnum.roll;
         this.whose_turn = this.PlayerEnum.player1;
@@ -34,14 +35,14 @@ class GameStateManager {
         }
 
         //else, generate roll, advance game_state, and message
-        var num;
         for(let i = 0; i < 4; i++) {
             this.last_roll[i] = Math.round(Math.random());
         }
 
         this.game_state = this.GameStateEnum.move_marker;
 
-        MessageAction.addGameInfoMessage("You rolled: " + this.last_roll.toString());
+        //sends message to Gameinfo to display roll.
+        MessageAction.addGameInfoMessage("You rolled: " + this.last_roll.toString() + " (" + this.addLastRoll() + ")");
         return;
     }
 
@@ -49,6 +50,9 @@ class GameStateManager {
         
     }
 
+    addLastRoll() {
+        return this.last_roll[0] + this.last_roll[1] + this.last_roll[2] + this.last_roll[3];
+    }
 
 }
 
