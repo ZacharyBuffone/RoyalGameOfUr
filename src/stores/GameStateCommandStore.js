@@ -10,7 +10,7 @@ class GameStateCommandStore extends EventEmitter {
     }
 
     addMarkerPosChangeCommand(command) {
-        this.id_count += 1;
+        this.id_count++;
         this.commands.push({
             type: command.type,
             id: this.id_count,
@@ -18,8 +18,21 @@ class GameStateCommandStore extends EventEmitter {
             pos: command.pos,
             done: false
         });
-        this.id_count++;
+
         this.emit("MARKER_POS_CHANGE");
+        return;
+    }
+
+    addDiceChangeCommand(command) {
+        this.id_count++;
+        this.commands.push({
+            type: command.type,
+            id: this.id_count,
+            dice: command.dice,
+            done: false
+        });
+
+        this.emit("DICE_CHANGE");
         return;
     }
 
@@ -62,6 +75,9 @@ Dispatcher.register((payload) => {
     switch(payload.type) {
         case "MARKER_POS_CHANGE":
             gameStateCommandStore.addMarkerPosChangeCommand(payload);
+            break;
+        case "DICE_CHANGE":
+            gameStateCommandStore.addDiceChangeCommand(payload);
             break;
         default:
             break;

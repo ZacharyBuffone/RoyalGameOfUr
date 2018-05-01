@@ -21,6 +21,16 @@ p {
   margin-right: -50%;
   transform: translate(-50%, -50%);
 }
+.dice-container {
+  width:25%;
+  position: fixed;
+  display: inline-block;
+}
+
+.dice {
+  margin: 5px;
+  display: inline-block;
+}
 
 .player-1-nonactive-container {
   background: transparent;

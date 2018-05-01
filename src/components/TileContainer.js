@@ -48,7 +48,7 @@ class TileContainer extends React.Component {
     }
 
     tileClickedCallback(value, type) {
-        if(type.includes('player1')) {
+        if(type.includes('player1') && this.state.tile_click_chord_first !== value) {
             this.setState((prevState) => {
                 return ({
                     tile_click_chord_first: value,
@@ -121,7 +121,7 @@ class TileContainer extends React.Component {
         for(var i = 0; i < 7; i++) {
             if(marker_list[i] === 0) {
                 var type = [];
-                if(this.state.tile_click_chord_player === 0 && this.state.tile_click_chord_player === player) {
+                if(this.state.tile_click_chord_first === 0 && this.state.tile_click_chord_player === player) {
                     type.push('highlighted');
                 }
                 type.push('player'+player);

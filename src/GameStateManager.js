@@ -52,6 +52,7 @@ class GameStateManager {
         //else, player can move marker
         else {
             this.game_state = this.GameStateEnum.move_marker;
+            GameStateCommandAction.commandDiceChange(this.last_roll);
         }
         return;
     }
@@ -83,6 +84,7 @@ class GameStateManager {
         
         this.game_state = this.GameStateEnum.roll;
         this.whose_turn = (this.whose_turn) % 2 + 1;
+        GameStateCommandAction.commandDiceChange([-1,-1,-1,-1]);
         alert(markerPosArr)
         MessageAction.addGameInfoMessage("It's Player " + this.whose_turn + "'s turn!");
         

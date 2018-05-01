@@ -9,3 +9,11 @@ export function commandMarkerPosChange(player, new_pos) {
     });
 
 };
+
+export function commandDiceChange(dice) {
+    dispatcher.dispatch ({
+        type: "DICE_CHANGE",
+        dice: dice
+    });
+
+};
