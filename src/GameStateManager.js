@@ -11,11 +11,12 @@ import * as GameStateCommandAction from './actions/GameStateCommandAction'
 
 class GameStateManager {
     constructor() {
-        this.GameStateEnum = Object.freeze({roll:1, move_marker:2});
+        this.GameStateEnum = Object.freeze({roll:0, move_marker:1});
         this.PlayerEnum = Object.freeze({player1:1, player2:2});
         //index specifies route number, element at index specifies tiles's value
         this.Player1Route = Object.freeze([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,22]);
         this.Player2Route = Object.freeze([0,15,16,17,18,5,6,7,8,9,10,11,12,19,20,21]);
+        this.FlowerPositions = Object.freeze([4,8,18,14,20]);
 
         this.game_state = this.GameStateEnum.roll;
         this.whose_turn = this.PlayerEnum.player1;
@@ -59,24 +60,26 @@ class GameStateManager {
 
     requestMarkerMove(from, to, player) {
         //game state is not move_marker, ignore
-        if(this.game_state !== this.GameStateEnum.move_marker) {
+        if (this.game_state !== this.GameStateEnum.move_marker) {
             MessageAction.addGameInfoMessage("You have to roll first.");
             return;
         }
         //wrong player, ignore
-        if(player !== this.whose_turn) {
+        if (player !== this.whose_turn) {
             MessageAction.addGameInfoMessage("It is player " + this.whose_turn + "'s turn.");
             return;
         }
         //can only move marker the amount of last roll, ignore
-        if(!this.isValidMove(from, to, player)) {
+        if (!this.isRoutingValid(from, to, player)) {
             MessageAction.addGameInfoMessage("You can only move the selected tile the amount you rolled, and on your route.\n(Click \"show route\" for details on each players route.)");
             return;
         }
 
-        //valid move, modify marker pos, move marker command, advance game_state
+        //everything reached after this is garenteed that the route is valid,
+        //and the number of tiles moved is correct
 
-        if(to === this.PLAYER_1_FINISH_VALUE || to === this.PLAYER_2_FINISH_VALUE) {
+        //player has reached the finish tile
+        if (to === this.PLAYER_1_FINISH_VALUE || to === this.PLAYER_2_FINISH_VALUE) {
             to = -1;
             if(player === 1) {
                 this.player1_score++;
@@ -87,12 +90,33 @@ class GameStateManager {
             GameStateCommandAction.commandPlayerScoreChange(this.player1_score, this.player2_score);
             MessageAction.addGameInfoMessage("Player " + player + " has scored!");
         }
+
+        //figures out if this move is a attack move
+        if ((player === 1 && this.player2_pos.includes(to)) || (player === 2 && this.player1_pos.includes(to))) {
+            if (this.FlowerPositions.includes(to)) {
+                //the defending player is on a flower, reject move
+                MessageAction.addGameInfoMessage("The player you are trying to attack is on a rosette and is invinsible.");
+                return;
+            }
+            //attack is valid, remove defending player marker
+            var defendersMarkerPosArr = (player === 1) ? this.player2_pos : this.player1_pos;
+            defendersMarkerPosArr[defendersMarkerPosArr.indexOf(to)] = 0;
+            GameStateCommandAction.commandMarkerPosChange(this.whose_turn, defendersMarkerPosArr);
+
+        }
+        //player has landed on flower, gets another roll and marker is invinsible.
+        if (this.FlowerPositions.includes(to)) {
+            MessageAction.addGameInfoMessage("You landed on a rosette! You get another roll and that marker is now invinsible.");
+        }
+
         var markerPosArr = (player === 1) ? this.player1_pos : this.player2_pos;
         markerPosArr[markerPosArr.indexOf(from)] = to;
         GameStateCommandAction.commandMarkerPosChange(this.whose_turn, markerPosArr);
-
+        
         this.game_state = this.GameStateEnum.roll;
-        this.changePlayer();
+        if(!this.FlowerPositions.includes(to)) {
+            this.changePlayer();
+        }
 
         //tell view objects to show updated game state
         GameStateCommandAction.commandDiceChange([-1,-1,-1,-1]);
@@ -101,7 +125,7 @@ class GameStateManager {
     }
 
     //decides if the move is valid
-    isValidMove(from, to, player) {
+    isRoutingValid(from, to, player) {
         var isValid = false
         var roll = this.addLastRoll()
         var route = (player === this.PlayerEnum.player1) ? this.Player1Route : this.Player2Route;

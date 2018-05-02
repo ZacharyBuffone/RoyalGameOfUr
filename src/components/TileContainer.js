@@ -67,25 +67,58 @@ class TileContainer extends React.Component {
 
     tileClickedCallback(value, type) {
         
+        //player1 marker clicked first
         if(type.includes('player1')) {
-            this.setState((prevState) => {
-                return ({
-                    tile_click_chord_first: value,
-                    tile_click_chord_player: 1,
-                    tile_click_chord_second: null,
-                    highlighted_marker: value
+            if(this.state.tile_click_chord_player === 2) {
+                GameStateManager.requestMarkerMove(parseInt(this.state.tile_click_chord_first, 10),
+                    parseInt(value, 10),
+                    this.state.tile_click_chord_player);
+                this.setState((prevState) => {
+                    return ({
+                        tile_click_chord_first: null,
+                        tile_click_chord_player:null,
+                        tile_click_chord_second: null,
+                        highlighted_marker: null
+                    });
                 });
-            });
+            }
+            else {
+                this.setState((prevState) => {
+                    return ({
+                        tile_click_chord_first: value,
+                        tile_click_chord_player: 1,
+                        tile_click_chord_second: null,
+                        highlighted_marker: value
+                    });
+                });
+            }
+
         }
         else if(type.includes('player2')) {
-            this.setState((prevState) => {
-                return ({
-                    tile_click_chord_first: value,
-                    tile_click_chord_player: 2,
-                    tile_click_chord_second: null,
-                    highlighted_marker: value
+            if(this.state.tile_click_chord_player === 1) {
+                GameStateManager.requestMarkerMove(parseInt(this.state.tile_click_chord_first, 10),
+                    parseInt(value, 10),
+                    this.state.tile_click_chord_player);
+                this.setState((prevState) => {
+                    return ({
+                        tile_click_chord_first: null,
+                        tile_click_chord_player:null,
+                        tile_click_chord_second: null,
+                        highlighted_marker: null
+                    });
                 });
-            });
+            }
+            else {
+                this.setState((prevState) => {
+                    return ({
+                        tile_click_chord_first: value,
+                        tile_click_chord_player: 2,
+                        tile_click_chord_second: null,
+                        highlighted_marker: value
+                    });
+                });
+            }
+
         }
         else {
             GameStateManager.requestMarkerMove(parseInt(this.state.tile_click_chord_first, 10),
