@@ -1,11 +1,15 @@
 {
-  "main.css": "static/css/main.fcce683a.css",
-  "main.css.map": "static/css/main.fcce683a.css.map",
-  "main.js": "static/js/main.0ed58009.js",
-  "main.js.map": "static/js/main.0ed58009.js.map",
+  "main.css": "static/css/main.552299d0.css",
+  "main.css.map": "static/css/main.552299d0.css.map",
+  "main.js": "static/js/main.bb351288.js",
+  "main.js.map": "static/js/main.bb351288.js.map",
+  "static/media/beige_finish.svg": "static/media/beige_finish.ed4d03dc.svg",
   "static/media/beige_marker.svg": "static/media/beige_marker.adff8bf7.svg",
   "static/media/beige_marker_highlighted.svg": "static/media/beige_marker_highlighted.2d89b7e9.svg",
+  "static/media/diceone.svg": "static/media/diceone.350eba77.svg",
+  "static/media/dicezero.svg": "static/media/dicezero.a7106055.svg",
   "static/media/flower.svg": "static/media/flower.2cb2c287.svg",
+  "static/media/grey_finish.svg": "static/media/grey_finish.5fad4c26.svg",
   "static/media/grey_marker.svg": "static/media/grey_marker.19104f78.svg",
   "static/media/grey_marker_highlighted.svg": "static/media/grey_marker_highlighted.9f4f2ba3.svg"
 }
