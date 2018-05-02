@@ -162,7 +162,7 @@ class TileContainer extends React.Component {
                         { this.renderTile(2, []) }
                         { this.renderTile(1, []) }
                         { this.renderBlankTile() }
-                        { this.renderBlankTile() }
+                        { this.renderTile(22, ['finish1'])}
                         { this.renderTile(14, ['flower']) }
                         { this.renderTile(13, []) }
                     </div>
@@ -182,7 +182,7 @@ class TileContainer extends React.Component {
                         { this.renderTile(16, []) }
                         { this.renderTile(15, []) }
                         { this.renderBlankTile() }
-                        { this.renderBlankTile() }
+                        { this.renderTile(21, ['finish2'])}
                         { this.renderTile(20, ['flower']) }
                         { this.renderTile(19, []) }
                     </div>

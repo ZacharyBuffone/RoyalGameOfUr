@@ -7,7 +7,6 @@ export function commandMarkerPosChange(player, new_pos) {
         pos: new_pos
         
     });
-
 };
 
 export function commandDiceChange(dice) {
@@ -15,7 +14,6 @@ export function commandDiceChange(dice) {
         type: "DICE_CHANGE",
         dice: dice
     });
-
 };
 
 export function commandPlayerTurnChange(player) {
@@ -23,5 +21,4 @@ export function commandPlayerTurnChange(player) {
         type: "PLAYER_TURN_CHANGE",
         player: player
     });
-
 };

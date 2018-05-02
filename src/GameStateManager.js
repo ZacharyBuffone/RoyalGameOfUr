@@ -14,8 +14,8 @@ class GameStateManager {
         this.GameStateEnum = Object.freeze({roll:1, move_marker:2});
         this.PlayerEnum = Object.freeze({player1:1, player2:2});
         //index specifies route number, element at index specifies tiles's value
-        this.Player1Route = Object.freeze([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14]);
-        this.Player2Route = Object.freeze([0,15,16,17,18,5,6,7,8,9,10,11,12,19,20]);
+        this.Player1Route = Object.freeze([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,22]);
+        this.Player2Route = Object.freeze([0,15,16,17,18,5,6,7,8,9,10,11,12,19,20,21]);
 
         this.game_state = this.GameStateEnum.roll;
         this.whose_turn = this.PlayerEnum.player1;
@@ -47,7 +47,7 @@ class GameStateManager {
         //if player rolled zero, pass turn to other players
         if(this.addLastRoll() === 0) {
             MessageAction.addGameInfoMessage("You rolled a zero, which means you cannot do anything!");
-            this.whose_turn = (this.whose_turn) % 2 + 1;
+            this.changePlayer();
         }
         //else, player can move marker
         else {
@@ -73,17 +73,26 @@ class GameStateManager {
             MessageAction.addGameInfoMessage("You can only move the selected tile the amount you rolled, and on your route.\n(Click \"show route\" for details on each players route.)");
             return;
         }
+
         //valid move, modify marker pos, move marker command, advance game_state
-        
+
+        if(to === this.PLAYER_1_FINISH_VALUE || to === this.PLAYER_2_FINISH_VALUE) {
+            to = -1;
+            if(player === 1) {
+                this.player1_score++;
+            } else {
+                this.player2_score++;
+            }
+            MessageAction.addGameInfoMessage("Player " + player + " has scored!");
+        }
         var markerPosArr = (player === 1) ? this.player1_pos : this.player2_pos;
         markerPosArr[markerPosArr.indexOf(from)] = to;
+        GameStateCommandAction.commandMarkerPosChange(this.whose_turn, markerPosArr);
 
         this.game_state = this.GameStateEnum.roll;
-        this.whose_turn = (this.whose_turn) % 2 + 1;
+        this.changePlayer();
 
         //tell view objects to show updated game state
-        GameStateCommandAction.commandMarkerPosChange(this.whose_turn, markerPosArr);
-        GameStateCommandAction.commandPlayerTurnChange(player % 2 + 1);
         GameStateCommandAction.commandDiceChange([-1,-1,-1,-1]);
         
         return;
@@ -103,6 +112,20 @@ class GameStateManager {
 
     addLastRoll() {
         return this.last_roll[0] + this.last_roll[1] + this.last_roll[2] + this.last_roll[3];
+    }
+
+    changePlayer() {
+        this.whose_turn = (this.whose_turn) % 2 + 1;
+        GameStateCommandAction.commandPlayerTurnChange((this.whose_turn === this.PlayerEnum.player1) ? 1 : 2);
+        return;
+    }
+
+    get PLAYER_1_FINISH_VALUE() {
+        return 23;
+    }
+
+    get PLAYER_2_FINISH_VALUE() {
+        return 22;
     }
 
 }
