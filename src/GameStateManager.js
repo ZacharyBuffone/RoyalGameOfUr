@@ -11,8 +11,11 @@ import * as GameStateCommandAction from './actions/GameStateCommandAction'
 
 class GameStateManager {
     constructor() {
+        //enums
         this.GameStateEnum = Object.freeze({roll:0, move_marker:1});
         this.PlayerEnum = Object.freeze({player1:1, player2:2});
+
+        //constant arrays
         //index specifies route number, element at index specifies tiles's value
         this.Player1Route = Object.freeze([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,22]);
         this.Player2Route = Object.freeze([0,15,16,17,18,5,6,7,8,9,10,11,12,19,20,21]);
@@ -120,11 +123,18 @@ class GameStateManager {
 
         //tell view objects to show updated game state
         GameStateCommandAction.commandDiceChange([-1,-1,-1,-1]);
+
+        //win condition has been met
+        if(this.player1_score === this.MAX_SCORE || this.player2_score === this.MAX_SCORE) {
+            for(var i = 0; i < 4; i++)
+                MessageAction.addGameInfoMessage("Player " + player + " has one!!!!!!!!!!!!!");
+
+        }
         
         return;
     }
 
-    //decides if the move is valid
+    //decides if the routing of a move is valid
     isRoutingValid(from, to, player) {
         var isValid = false
         var roll = this.addLastRoll()
@@ -133,7 +143,7 @@ class GameStateManager {
             isValid = true;
         }
 
-        return isValid;        
+        return isValid;
     }
 
     addLastRoll() {
@@ -146,13 +156,10 @@ class GameStateManager {
         return;
     }
 
-    get PLAYER_1_FINISH_VALUE() {
-        return 23;
-    }
-
-    get PLAYER_2_FINISH_VALUE() {
-        return 22;
-    }
+    //constants
+    get PLAYER_1_FINISH_VALUE() { return 22; }
+    get PLAYER_2_FINISH_VALUE() { return 21; }
+    get MAX_SCORE() { return 7; }
 
 }
 
