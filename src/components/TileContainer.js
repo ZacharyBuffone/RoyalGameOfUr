@@ -12,6 +12,8 @@ class TileContainer extends React.Component {
         this.state = {
             player_1_marker_pos: [],                 //list of marker positions
             player_2_marker_pos: [],                 // ''
+            player_1_score: 0,
+            player_2_score: 0,
             tile_click_chord_first: null,            //specifies which tile was clicked first
             tile_click_chord_second: null,           //                tile was clicked second
             tile_click_chord_player: null,           //                player first tile belonged to.
@@ -29,6 +31,14 @@ class TileContainer extends React.Component {
             var command = GameStateCommandStore.getLastUndoneCommandOfType("PLAYER_TURN_CHANGE");
             this.setState({
                 whose_turn: command.player
+            });
+            GameStateCommandStore.done(command.id);
+        });
+        GameStateCommandStore.on("PLAYER_SCORE_CHANGE", () => {
+            var command = GameStateCommandStore.getLastUndoneCommandOfType("PLAYER_SCORE_CHANGE");
+            this.setState({
+                player_1_score: command.player_1_score,
+                player_2_score: command.player_2_score
             });
             GameStateCommandStore.done(command.id);
         });
@@ -152,7 +162,8 @@ class TileContainer extends React.Component {
                         <p>Player 1</p>
                         {this.state.whose_turn === 1 && (<p>></p>)}
                     </button>
-                    { this.renderNonactiveTiles(1) } 
+                    { this.renderNonactiveTiles(1) }
+                    <button className='tile'>Score: {this.state.player_1_score}</button> 
                 </div>
 
                 <div class='tile-container'>
@@ -194,6 +205,7 @@ class TileContainer extends React.Component {
                         {this.state.whose_turn === 2 && (<p>></p>)}
                     </button>
                     { this.renderNonactiveTiles(2) }
+                    <button className='tile'>Score: {this.state.player_2_score}</button>
                 </div>
 
             </div>

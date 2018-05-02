@@ -5,7 +5,6 @@ export function commandMarkerPosChange(player, new_pos) {
         type: "MARKER_POS_CHANGE",
         player: player,
         pos: new_pos
-        
     });
 };
 
@@ -20,5 +19,13 @@ export function commandPlayerTurnChange(player) {
     dispatcher.dispatch ({
         type: "PLAYER_TURN_CHANGE",
         player: player
+    });
+};
+
+export function commandPlayerScoreChange(player_1_score, player_2_score) {
+    dispatcher.dispatch ({
+        type: "PLAYER_SCORE_CHANGE",
+        player_1_score: player_1_score,
+        player_2_score: player_2_score
     });
 };

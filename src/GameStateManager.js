@@ -80,9 +80,11 @@ class GameStateManager {
             to = -1;
             if(player === 1) {
                 this.player1_score++;
+
             } else {
                 this.player2_score++;
             }
+            GameStateCommandAction.commandPlayerScoreChange(this.player1_score, this.player2_score);
             MessageAction.addGameInfoMessage("Player " + player + " has scored!");
         }
         var markerPosArr = (player === 1) ? this.player1_pos : this.player2_pos;
