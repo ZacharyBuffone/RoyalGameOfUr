@@ -74,19 +74,17 @@ class GameStateManager {
             return;
         }
         //valid move, modify marker pos, move marker command, advance game_state
-        MessageAction.addGameInfoMessage("Valid move!");
         
         var markerPosArr = (player === 1) ? this.player1_pos : this.player2_pos;
         markerPosArr[markerPosArr.indexOf(from)] = to;
 
-        GameStateCommandAction.commandMarkerPosChange(this.whose_turn, markerPosArr);
-        
-        
         this.game_state = this.GameStateEnum.roll;
         this.whose_turn = (this.whose_turn) % 2 + 1;
+
+        //tell view objects to show updated game state
+        GameStateCommandAction.commandMarkerPosChange(this.whose_turn, markerPosArr);
+        GameStateCommandAction.commandPlayerTurnChange(player % 2 + 1);
         GameStateCommandAction.commandDiceChange([-1,-1,-1,-1]);
-        alert(markerPosArr)
-        MessageAction.addGameInfoMessage("It's Player " + this.whose_turn + "'s turn!");
         
         return;
     }

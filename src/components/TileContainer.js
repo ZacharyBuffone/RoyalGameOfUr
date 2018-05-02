@@ -15,7 +15,8 @@ class TileContainer extends React.Component {
             tile_click_chord_first: null,            //specifies which tile was clicked first
             tile_click_chord_second: null,           //                tile was clicked second
             tile_click_chord_player: null,           //                player first tile belonged to.
-            highlighted_marker: null                 //marker which is highlighted
+            highlighted_marker: null,                //marker which is highlighted
+            whose_turn: 1
             
         };
 
@@ -24,6 +25,13 @@ class TileContainer extends React.Component {
     componentDidMount() {
         GameStateCommandStore.on("MARKER_POS_CHANGE", 
             this.getLastMarkerPosChangeCommand.bind(this));
+        GameStateCommandStore.on("PLAYER_TURN_CHANGE", () => {
+            var command = GameStateCommandStore.getLastUndoneCommandOfType("PLAYER_TURN_CHANGE");
+            this.setState({
+                whose_turn: command.player
+            });
+            GameStateCommandStore.done(command.id);
+        });
 
         this.getLastMarkerPosChangeCommand();
         this.getLastMarkerPosChangeCommand();
@@ -48,7 +56,8 @@ class TileContainer extends React.Component {
     }
 
     tileClickedCallback(value, type) {
-        if(type.includes('player1') && this.state.tile_click_chord_first !== value) {
+        
+        if(type.includes('player1')) {
             this.setState((prevState) => {
                 return ({
                     tile_click_chord_first: value,
@@ -139,6 +148,10 @@ class TileContainer extends React.Component {
             <div class='game-board'>
                 
                 <div class='player-1-nonactive-container'>
+                    <button className='tile'>
+                        <p>Player 1</p>
+                        {this.state.whose_turn === 1 && (<p>></p>)}
+                    </button>
                     { this.renderNonactiveTiles(1) } 
                 </div>
 
@@ -176,6 +189,10 @@ class TileContainer extends React.Component {
                 </div>
 
                 <div class='player-2-nonactive-container'>
+                    <button className='tile'>
+                        <p>Player 2</p>
+                        {this.state.whose_turn === 2 && (<p>></p>)}
+                    </button>
                     { this.renderNonactiveTiles(2) }
                 </div>
 

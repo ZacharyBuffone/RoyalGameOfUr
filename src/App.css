@@ -47,6 +47,11 @@ p {
   left: 23%;
 }
 
+.player-indicator {
+  font-size: 16px;
+
+}
+
 .game-board {
   background: #cbcbcb;
   position: fixed;

@@ -36,6 +36,19 @@ class GameStateCommandStore extends EventEmitter {
         return;
     }
 
+    addPlayerTurnChangeCommand(command) {
+        this.id_count++;
+        this.commands.push({
+            type: command.type,
+            id: this.id_count,
+            player: command.player,
+            done: false
+        });
+
+        this.emit("PLAYER_TURN_CHANGE");
+        return;
+    }
+
     getLastCommand(){
         return this.commands[this.commands.length-1];
     }
@@ -78,6 +91,9 @@ Dispatcher.register((payload) => {
             break;
         case "DICE_CHANGE":
             gameStateCommandStore.addDiceChangeCommand(payload);
+            break;
+        case "PLAYER_TURN_CHANGE":
+            gameStateCommandStore.addPlayerTurnChangeCommand(payload);
             break;
         default:
             break;

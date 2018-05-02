@@ -17,3 +17,11 @@ export function commandDiceChange(dice) {
     });
 
 };
+
+export function commandPlayerTurnChange(player) {
+    dispatcher.dispatch ({
+        type: "PLAYER_TURN_CHANGE",
+        player: player
+    });
+
+};
