@@ -1,8 +1,8 @@
 {
-  "main.css": "static/css/main.e8947ba5.css",
-  "main.css.map": "static/css/main.e8947ba5.css.map",
-  "main.js": "static/js/main.c74a5cbe.js",
-  "main.js.map": "static/js/main.c74a5cbe.js.map",
+  "main.css": "static/css/main.561918e2.css",
+  "main.css.map": "static/css/main.561918e2.css.map",
+  "main.js": "static/js/main.36001fe0.js",
+  "main.js.map": "static/js/main.36001fe0.js.map",
   "static/media/babylon.mp3": "static/media/babylon.a491fcdb.mp3",
   "static/media/beige_finish.svg": "static/media/beige_finish.ed4d03dc.svg",
   "static/media/beige_marker.svg": "static/media/beige_marker.adff8bf7.svg",
@@ -13,5 +13,6 @@
   "static/media/grey_finish.svg": "static/media/grey_finish.5fad4c26.svg",
   "static/media/grey_marker.svg": "static/media/grey_marker.19104f78.svg",
   "static/media/grey_marker_highlighted.svg": "static/media/grey_marker_highlighted.9f4f2ba3.svg",
-  "static/media/stoneonstone.mp3": "static/media/stoneonstone.7497ec95.mp3"
+  "static/media/roll_dice_button.svg": "static/media/roll_dice_button.b377a005.svg",
+  "static/media/stoneonstone.mp3": "static/media/stoneonstone.6f279720.mp3"
 }
