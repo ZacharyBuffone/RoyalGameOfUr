@@ -53,6 +53,17 @@ class LinkedList {
         return value;
     }
 
+    get length(){
+        var i = 0;
+        var curr_node = this.head;
+        while(curr_node.next !== null) {
+            curr_node = curr_node.next;
+            i++;
+        }
+        
+        return i;
+    }
+
 }
 
 class Node {

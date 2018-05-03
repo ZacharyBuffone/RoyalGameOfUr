@@ -7,6 +7,7 @@ class SoundManager {
         this.sounds_playing = new LinkedList();
         this.id_count = 0;
         this.volume = .3;
+        this.muted = false;
 
         this.Sounds = Object.freeze({
             background_music: babylonmp3,
@@ -19,6 +20,14 @@ class SoundManager {
         return;
     }
 
+    toggleMute() {
+        this.muted = !this.muted;
+        var new_volume = this.muted ? 0 : this.volume;
+        for(var i = 0; i < this.sounds_playing.length; i++) {
+            this.sounds_playing.atIndex(i).audio.volume = new_volume;
+        }
+        return;
+    }
 
     playSound(sound, loop) {
         var audio = new Audio(sound);
@@ -35,7 +44,7 @@ class SoundManager {
 
         });
 
-        audio.volume = this.volume;
+        audio.volume = this.muted ? 0 : this.volume;
 
         audio.play();
 

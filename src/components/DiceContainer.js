@@ -3,6 +3,7 @@ import GameStateManager from "../GameStateManager";
 import GameStateCommandStore from "../stores/GameStateCommandStore";
 import dice_zero from "../img/dicezero.svg";
 import dice_one from "../img/diceone.svg";
+import roll_dice from '../img/roll_dice_button.svg';
 
 class DiceContainer extends React.Component {
 
@@ -42,8 +43,10 @@ class DiceContainer extends React.Component {
 
     render() {
         return (
-            <div>
-                <button onClick={this.handleClick.bind(this)}>Roll Dice.</button>
+            <div className='dice-info'>
+                <button className='roll-dice-button' onClick={this.handleClick.bind(this)}>
+                    <img src={roll_dice} alt='Roll Dice'/>
+                </button>
                 { this.state.current_dice[0] !== -1 &&
                     <div className='dice-container'>
                         <div className='dice'>{this.getDiceImage(0)}</div>

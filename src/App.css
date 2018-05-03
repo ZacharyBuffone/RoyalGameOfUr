@@ -6,6 +6,26 @@ p {
   margin: 0;
 }
 
+.header {
+  margin-left: 20px;
+}
+
+.header-block {
+  display: inline-block;
+}
+
+.header-spacer {
+  display: inline-block;
+  width: 10px;
+  text-align: center;
+}
+
+.header-spacer2 {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+
 .game-info {
   position: fixed;
   top: 100%;
@@ -21,11 +41,23 @@ p {
   margin-right: -50%;
   transform: translate(-50%, -50%);
 }
+
 .dice-container {
   width:25%;
   position: fixed;
   display: inline-block;
 
+}
+
+.dice-info { 
+  position: fixed;
+  left: 5px;
+  bottom: 5px;
+}
+
+.roll-dice-button {
+  background: transparent;
+  border: 0px transparent;
 }
 
 .dice {

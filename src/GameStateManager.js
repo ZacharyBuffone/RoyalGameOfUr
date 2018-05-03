@@ -134,6 +134,10 @@ class GameStateManager {
         return;
     }
 
+    toggleMuteSound() {
+        SoundManager.toggleMute();
+    }
+
     //decides if the routing of a move is valid
     isRoutingValid(from, to, player) {
         var isValid = false
