@@ -8,6 +8,7 @@
 
 import * as MessageAction from "./actions/MessageAction";
 import * as GameStateCommandAction from './actions/GameStateCommandAction'
+import SoundManager from './SoundManager.js'
 
 class GameStateManager {
     constructor() {
@@ -78,8 +79,7 @@ class GameStateManager {
             return;
         }
 
-        //everything reached after this is garenteed that the route is valid,
-        //and the number of tiles moved is correct
+        //everything reached after this is guaranteed that the route is valid
 
         //player has reached the finish tile
         if (to === this.PLAYER_1_FINISH_VALUE || to === this.PLAYER_2_FINISH_VALUE) {
@@ -123,7 +123,7 @@ class GameStateManager {
 
         //tell view objects to show updated game state
         GameStateCommandAction.commandDiceChange([-1,-1,-1,-1]);
-
+        SoundManager.playSound(SoundManager.Sounds.move_marker);
         //win condition has been met
         if(this.player1_score === this.MAX_SCORE || this.player2_score === this.MAX_SCORE) {
             for(var i = 0; i < 4; i++)

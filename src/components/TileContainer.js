@@ -20,7 +20,7 @@ class TileContainer extends React.Component {
             highlighted_marker: null,                //marker which is highlighted
             whose_turn: 1
             
-        };
+        }; 
 
     }
 
@@ -177,6 +177,7 @@ class TileContainer extends React.Component {
                     type.push('highlighted');
                 }
                 type.push('player'+player);
+                type.push('nonactive');
 
                 buffer.push(<Tile value='0' type={type} tileClickCallback={this.tileClickedCallback.bind(this)} />);
             }

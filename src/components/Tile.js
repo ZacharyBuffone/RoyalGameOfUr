@@ -14,11 +14,16 @@ class Tile extends React.Component {
     }
 
     render() {
+        var button_class = this.ACTIVE_TILE;
+        if(this.props.type.includes('nonactive')) {
+            button_class = this.NONACTIVE_TILE;
+        }
+
         var button_value = this.props.value;
         if(this.props.type.includes('flower')) {
             button_value = (<img class='tile-decal' src={flower_img} alt='flower' />);
         }
-        if(this.props.type.includes('player1')){
+        if(this.props.type.includes('player1')) {
             if(this.props.type.includes('highlighted')) {
                 button_value = (<img class='tile-decal' src={grey_marker_highlighted_img} alt='player1' />);
             }
@@ -26,7 +31,7 @@ class Tile extends React.Component {
                 button_value = (<img class='tile-decal' src={grey_marker_img} alt='player1' />);
             }
         }
-        if(this.props.type.includes('player2')){
+        if(this.props.type.includes('player2')) {
             if(this.props.type.includes('highlighted')) {
                 button_value = (<img class='tile-decal' src={beige_marker_highlighted_img} alt='player2' />);
             }
@@ -42,10 +47,14 @@ class Tile extends React.Component {
         }
 
         return (
-            <button class='tile' onClick={ this.handleClick.bind(this) }>{ button_value }</button>
+            <button class={button_class} onClick={ this.handleClick.bind(this) }>{ button_value }</button>
         );
 
     }
+
+    //constants
+    get ACTIVE_TILE() { return 'tile'; }
+    get NONACTIVE_TILE() { return 'tile tile-nonactive'; }
 
 }
 
