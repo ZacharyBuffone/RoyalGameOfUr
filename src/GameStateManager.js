@@ -28,6 +28,8 @@ class GameStateManager {
         this.player2_pos = [0,0,0,0,0,0,0];
         this.player1_score = 0;
         this.player2_score = 0;
+        this.player1_name = 'Player 1';
+        this.player2_name = 'Player 2';
         this.last_roll = [];
 
         GameStateCommandAction.commandMarkerPosChange(this.PlayerEnum.player1, this.player1_pos);
@@ -63,23 +65,25 @@ class GameStateManager {
     }
 
     requestMarkerMove(from, to, player) {
-        //game state is not move_marker, ignore
-        if (this.game_state !== this.GameStateEnum.move_marker) {
-            MessageAction.addGameInfoMessage("You have to roll first.");
-            return;
-        }
+
         //wrong player, ignore
         if (player !== this.whose_turn) {
             MessageAction.addGameInfoMessage("It is player " + this.whose_turn + "'s turn.");
             return;
         }
+        //game state is not move_marker, ignore
+        if (this.game_state !== this.GameStateEnum.move_marker) {
+            MessageAction.addGameInfoMessage("You have to roll first.");
+            return;
+        }
+
         //can only move marker the amount of last roll, ignore
         if (!this.isRoutingValid(from, to, player)) {
             MessageAction.addGameInfoMessage("You can only move the selected tile the amount you rolled, and on your route.\n(Click \"show route\" for details on each players route.)");
             return;
         }
 
-        //everything reached after this is guaranteed that the route is valid
+        //everything reached after this is guaranteed the route is valid
 
         //player has reached the finish tile
         if (to === this.PLAYER_1_FINISH_VALUE || to === this.PLAYER_2_FINISH_VALUE) {
@@ -126,8 +130,9 @@ class GameStateManager {
         SoundManager.playSound(SoundManager.Sounds.move_marker);
         //win condition has been met
         if(this.player1_score === this.MAX_SCORE || this.player2_score === this.MAX_SCORE) {
-            for(var i = 0; i < 4; i++)
+            for(var i = 0; i < 4; i++) {
                 MessageAction.addGameInfoMessage("Player " + player + " has one!!!!!!!!!!!!!");
+            }
 
         }
         
@@ -136,6 +141,28 @@ class GameStateManager {
 
     toggleMuteSound() {
         SoundManager.toggleMute();
+        return;
+    }
+
+    displayHowToPlay() {
+        return;
+    }
+
+    namePlayers(p_1_name, p_2_name) {
+        if(p_1_name !== '') {
+            this.player1_name = p_1_name;
+        }
+        if(p_2_name !== '') {
+            this.player2_name = p_2_name;
+        }
+        GameStateCommandAction.commandNamePlayers(this.player1_name, this.player2_name);
+        return;
+    }
+
+    firstTurn(player) {
+        this.whose_turn = player;
+        GameStateCommandAction.commandPlayerTurnChange(player);
+        return;
     }
 
     //decides if the routing of a move is valid

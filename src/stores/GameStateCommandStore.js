@@ -63,6 +63,20 @@ class GameStateCommandStore extends EventEmitter {
         return;
     }
 
+    addNamePlayersCommand(command) {
+        this.id_count++;
+        this.commands.push({
+            type: command.type,
+            id: this.id_count,
+            player_1_name: command.player_1_name,
+            player_2_name: command.player_2_name,
+            done: false
+        });
+
+        this.emit("NAME_PLAYERS");
+        return;
+    }
+
     getLastCommand(){
         return this.commands[this.commands.length-1];
     }
@@ -111,7 +125,10 @@ Dispatcher.register((payload) => {
             break;
         case "PLAYER_SCORE_CHANGE":
             gameStateCommandStore.addPlayerScoreChangeCommand(payload);
-            break; 
+            break;
+        case "NAME_PLAYERS":
+            gameStateCommandStore.addNamePlayersCommand(payload);
+            break;
         default:
             break;
     }

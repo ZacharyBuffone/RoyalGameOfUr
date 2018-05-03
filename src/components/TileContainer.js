@@ -14,6 +14,8 @@ class TileContainer extends React.Component {
             player_2_marker_pos: [],                 // ''
             player_1_score: 0,
             player_2_score: 0,
+            player_1_name: null,
+            player_2_name: null,
             tile_click_chord_first: null,            //specifies which tile was clicked first
             tile_click_chord_second: null,           //                tile was clicked second
             tile_click_chord_player: null,           //                player first tile belonged to.
@@ -39,6 +41,14 @@ class TileContainer extends React.Component {
             this.setState({
                 player_1_score: command.player_1_score,
                 player_2_score: command.player_2_score
+            });
+            GameStateCommandStore.done(command.id);
+        });
+        GameStateCommandStore.on("NAME_PLAYERS", () => {
+            var command = GameStateCommandStore.getLastUndoneCommandOfType("NAME_PLAYERS");
+            this.setState({
+                player_1_name: command.player_1_name,
+                player_2_name: command.player_2_name
             });
             GameStateCommandStore.done(command.id);
         });
@@ -192,8 +202,8 @@ class TileContainer extends React.Component {
             <div class='game-board'>
                 
                 <div class='player-1-nonactive-container'>
-                    <button className='tile'>
-                        <p>Player 1</p>
+                    <button className='tile player-indicator'>
+                        <p>{this.state.player_1_name}</p>
                         {this.state.whose_turn === 1 && (<p>></p>)}
                     </button>
                     { this.renderNonactiveTiles(1) }
@@ -234,8 +244,8 @@ class TileContainer extends React.Component {
                 </div>
 
                 <div class='player-2-nonactive-container'>
-                    <button className='tile'>
-                        <p>Player 2</p>
+                    <button className='tile player-indicator'>
+                        <p>{this.state.player_2_name}</p>
                         {this.state.whose_turn === 2 && (<p>></p>)}
                     </button>
                     { this.renderNonactiveTiles(2) }
