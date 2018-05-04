@@ -50,7 +50,6 @@ class GameStateManager {
             this.last_roll[i] = Math.round(Math.random());
         }
 
-        MessageAction.addGameInfoMessage("You rolled: " + this.last_roll.toString() + " (" + this.addLastRoll() + ")");
         //if player rolled zero, pass turn to other players
         if(this.addLastRoll() === 0) {
             MessageAction.addGameInfoMessage("You rolled a zero, which means you cannot do anything!");
@@ -79,7 +78,7 @@ class GameStateManager {
 
         //can only move marker the amount of last roll, ignore
         if (!this.isRoutingValid(from, to, player)) {
-            MessageAction.addGameInfoMessage("You can only move the selected tile the amount you rolled, and on your route.\n(Click \"show route\" for details on each players route.)");
+            MessageAction.addGameInfoMessage("You can only move the selected tile the amount you rolled, and on your route. Click \"How to play\" above for more details");
             return;
         }
 
@@ -145,6 +144,11 @@ class GameStateManager {
     }
 
     displayHowToPlay() {
+        return;
+    }
+
+    playBackgroundMusic() {
+        SoundManager.playSound(SoundManager.Sounds.background_music, true);
         return;
     }
 

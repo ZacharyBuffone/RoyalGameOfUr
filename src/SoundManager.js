@@ -14,9 +14,6 @@ class SoundManager {
             move_marker: stoneonstonemp3
         })
 
-        //play background music by default
-        this.playSound(this.Sounds.background_music, true);
-
         return;
     }
 

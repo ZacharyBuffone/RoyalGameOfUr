@@ -29,7 +29,7 @@ class Header extends React.Component {
                 </div>
                 <div className='header-spacer2'>|</div>
                 <div className='header-block'>
-                    <p><a href='http://github.com/ZacharyBuffone/RoyalGameOfUr' target='_blank'>GitHub</a></p>
+                    <p><a href='http://github.com/ZacharyBuffone/RoyalGameOfUr' target='_blank' rel="noopener noreferrer">GitHub</a></p>
                 </div>
                 <div className='header-spacer2'>|</div>
                 <div className='header-block'>

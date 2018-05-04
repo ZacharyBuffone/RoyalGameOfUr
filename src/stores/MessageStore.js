@@ -7,12 +7,11 @@ class MessageStore extends EventEmitter {
 
         this.messages = [];
 
-        this.id_count = this.messages.length + 1;
+        this.id_count = 0;
         return;
     }
 
     addMessage(msg) {
-        
         this.messages.push(
             {
                 id: this.id_count,
@@ -28,11 +27,16 @@ class MessageStore extends EventEmitter {
         return this.messages;
     }
 
+    getLastMessage() {
+        return this.messages[this.messages.length - 1];
+    }
+
 }
 
 const messageStore = new MessageStore();
 
 dispatcher.register((payload) => {
+
     switch(payload.type) {
         case "MESSAGE":
             messageStore.addMessage(payload.text);

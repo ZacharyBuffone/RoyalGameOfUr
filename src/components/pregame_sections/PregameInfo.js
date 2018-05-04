@@ -21,6 +21,8 @@ class PregameInfo extends React.Component {
             welcome_is_active: false,
             name_selection_is_active: true
         });
+        GameStateManager.playBackgroundMusic();
+        return;
     }
 
     onNameSelectionNextClick(p_1_name, p_2_name) {
