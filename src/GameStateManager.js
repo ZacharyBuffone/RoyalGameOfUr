@@ -9,11 +9,13 @@
 import * as MessageAction from "./actions/MessageAction";
 import * as GameStateCommandAction from './actions/GameStateCommandAction'
 import SoundManager from './SoundManager.js'
+import AIPlayer from './AIPlayer.js'
+import AIOption from './AIOption.js'
 
 class GameStateManager {
     constructor() {
         //enums
-        this.GameStateEnum = Object.freeze({roll:0, move_marker:1});
+        this.GameStateEnum = Object.freeze({paused:-1, roll:0, move_marker:1});
         this.PlayerEnum = Object.freeze({player1:1, player2:2});
 
         //constant arrays
@@ -22,7 +24,7 @@ class GameStateManager {
         this.Player2Route = Object.freeze([0,15,16,17,18,5,6,7,8,9,10,11,12,19,20,21]);
         this.FlowerPositions = Object.freeze([4,8,18,14,20]);
 
-        this.game_state = this.GameStateEnum.roll;
+        this.game_state = this.GameStateEnum.paused;
         this.whose_turn = this.PlayerEnum.player1;
         this.player1_pos = [0,0,0,0,0,0,0];
         this.player2_pos = [0,0,0,0,0,0,0];
@@ -31,6 +33,8 @@ class GameStateManager {
         this.player1_name = 'Player 1';
         this.player2_name = 'Player 2';
         this.last_roll = [];
+        this.is_ai_playing = false;
+        this.ai_player = null;
 
         GameStateCommandAction.commandMarkerPosChange(this.PlayerEnum.player1, this.player1_pos);
         GameStateCommandAction.commandMarkerPosChange(this.PlayerEnum.player2, this.player2_pos);
@@ -60,6 +64,11 @@ class GameStateManager {
             this.game_state = this.GameStateEnum.move_marker;
             GameStateCommandAction.commandDiceChange(this.last_roll);
         }
+
+        if((this.addLastRoll() === 0) && (this.whose_turn == this.PlayerEnum.player2) && (this.is_ai_playing)) {
+            this.doAITurn();
+        }
+
         return;
     }
 
@@ -82,7 +91,7 @@ class GameStateManager {
             return;
         }
 
-        //everything reached after this is guaranteed the route is valid
+        //everything reached after this is guaranteed the routing is valid
 
         //player has reached the finish tile
         if (to === this.PLAYER_1_FINISH_VALUE || to === this.PLAYER_2_FINISH_VALUE) {
@@ -133,6 +142,10 @@ class GameStateManager {
                 MessageAction.addGameInfoMessage("Player " + player + " has one!!!!!!!!!!!!!");
             }
 
+        }
+
+        if((this.whose_turn === this.PlayerEnum.player2) && this.is_ai_playing) {
+            this.doAITurn();
         }
         
         return;
@@ -185,9 +198,32 @@ class GameStateManager {
         return this.last_roll[0] + this.last_roll[1] + this.last_roll[2] + this.last_roll[3];
     }
 
+    playingWithAI() {
+        this.is_ai_playing = true;
+        this.ai_player = new AIPlayer();
+        this.player2_name = "Computer";
+    }
+
+    doAITurn() {
+        this.requestRoll();
+            if(this.requestRoll() !== 0) {
+                var option = this.ai_player.go(this.player1_pos, this.player2_pos, this.player1_score, this.player2_score, this.addLastRoll());
+                this.requestMarkerMove(option.from, option.to, 2);
+            }
+        return;
+    }
+
     changePlayer() {
         this.whose_turn = (this.whose_turn) % 2 + 1;
         GameStateCommandAction.commandPlayerTurnChange((this.whose_turn === this.PlayerEnum.player1) ? 1 : 2);
+        return;
+    }
+
+    start() {
+        this.game_state = this.GameStateEnum.roll;
+        if(this.whose_turn === this.PlayerEnum.player2 && this.is_ai_playing) {
+            this.doAITurn();            
+        }
         return;
     }
 

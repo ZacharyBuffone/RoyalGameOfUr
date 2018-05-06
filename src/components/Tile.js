@@ -19,7 +19,7 @@ class Tile extends React.Component {
             button_class = this.NONACTIVE_TILE;
         }
 
-        var button_value = this.props.value;
+        var button_value = "";
         if(this.props.type.includes('flower')) {
             button_value = (<img class='tile-decal' src={flower_img} alt='flower' />);
         }

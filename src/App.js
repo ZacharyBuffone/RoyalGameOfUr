@@ -4,6 +4,7 @@ import Gameboard from './components/Gameboard.js';
 import Gameinfo from './components/Gameinfo.js';
 import Header from './components/Header.js';
 import PregameInfo from './components/pregame_sections/PregameInfo.js';
+import GameStateManager from './GameStateManager.js';
 
 class App extends React.Component {
 	constructor(){
@@ -11,9 +12,8 @@ class App extends React.Component {
 
 		this.state = {
 			pregame_info_is_active: true,
-			header_element: <Header />,
-			gameboard_element: <Gameboard  />,
-			gameinfo_element: <Gameinfo />
+			how_to_play_active: false,
+
 		};
 		return;
 	}
@@ -22,12 +22,13 @@ class App extends React.Component {
 		this.setState({
 			pregame_info_is_active: false
 		})
+		GameStateManager.start();
 	}
 
 	render() {
 		return (
 			<div>
-				{this.state.pregame_info_is_active && <PregameInfo onDone={this.onPregameInfoDone.bind(this)} />}
+				{this.state.pregame_info_is_active && <PregameInfo showHowToPlay={this.state.how_to_play_active} onDone={this.onPregameInfoDone.bind(this)} />}
 				<div className={this.state.pregame_info_is_active ? 'screen-blur' : ''}>
 					<Header />
 					<Gameboard />

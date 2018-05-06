@@ -55,6 +55,9 @@ class LinkedList {
 
     get length(){
         var i = 0;
+        if(this.head === null) {
+            return 0;
+        }
         var curr_node = this.head;
         while(curr_node.next !== null) {
             curr_node = curr_node.next;

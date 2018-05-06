@@ -26,6 +26,18 @@ h1 {
 
 }
 
+@keyframes pregame-window-in-animation {
+  0% {
+    left: 150%;
+  }
+  33% {
+    left: 150%;
+  }
+  100% {
+    left: 50%
+  }
+}
+
 /*PREGAME-INFO*/
 
 .screen-blur {
@@ -53,6 +65,12 @@ h1 {
   transform: translate(-50%, -50%);
 }
 
+.pregame-window.in {
+  animation: pregame-window-in-animation;
+  animation-delay: 0ms;
+  animation-duration: 1500ms;
+}
+
 .pregame-next-button {
   position: fixed;
   background: white;
@@ -61,11 +79,15 @@ h1 {
   left: 50%;
   height: 8%;
   width:  20%;
-  bottom: 25px;
+  bottom: 4%;
   transform: translate(-50%, 0);
 }
 .pregame-next-button:hover {
   background: #d5d5d5;
+}
+
+.pregame-next-button.yes-button {
+  bottom: 16%;
 }
 
 /*PREGAME-NAME-SELECTION*/
