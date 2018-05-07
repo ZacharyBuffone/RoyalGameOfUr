@@ -1,11 +1,6 @@
 import React from 'react';
 import GameStateManager from '../GameStateManager';
 class Header extends React.Component {
-    constructor() {
-        super();
-
-        
-    }
 
     howToPlayCallback(e) {
         GameStateManager.displayHowToPlay();

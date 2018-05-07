@@ -2,6 +2,7 @@ import React from 'react';
 import dice_zero from "../../img/dicezero.svg";
 import dice_one from "../../img/diceone.svg";
 import roll_dice from '../../img/roll_dice_button.svg';
+import RollDiceButton from '../RollDiceButton';
 
 class PregameFirstTurnRoll extends React.Component {
     constructor() {
@@ -85,9 +86,7 @@ class PregameFirstTurnRoll extends React.Component {
                     <h2>{this.state.prompt}</h2>
                 <div>
                     {!this.state.done &&
-                        <button className='roll-dice-button' onClick={this.rollDiceButtonClick.bind(this)}>
-                            <img src={roll_dice} alt='Roll Dice'/>
-                        </button>
+                        <RollDiceButton onClick={this.rollDiceButtonClick.bind(this)} />
                     }
                     { this.state.last_roll[0] !== -1 &&
                         <div className='roll-dice-container'>

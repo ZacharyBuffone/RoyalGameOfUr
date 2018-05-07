@@ -1,9 +1,9 @@
 import React from 'react';
 import GameStateManager from "../GameStateManager";
 import GameStateCommandStore from "../stores/GameStateCommandStore";
+import RollDiceButton from "./RollDiceButton.js"
 import dice_zero from "../img/dicezero.svg";
 import dice_one from "../img/diceone.svg";
-import roll_dice from '../img/roll_dice_button.svg';
 
 class DiceContainer extends React.Component {
 
@@ -11,8 +11,8 @@ class DiceContainer extends React.Component {
         super();
         
         this.state = {
-            current_dice: [-1, -1, -1, -1]
-        };
+            current_dice: [-1, -1, -1, -1],
+        }; 
     }
 
     componentDidMount() {
@@ -23,7 +23,7 @@ class DiceContainer extends React.Component {
             });
             GameStateCommandStore.done(command.id);
         });
-
+        return;
     }
 
     handleClick(e) {
@@ -41,12 +41,11 @@ class DiceContainer extends React.Component {
 
     }
 
+
     render() {
         return (
             <div className='dice-info'>
-                <button className='roll-dice-button' onClick={this.handleClick.bind(this)}>
-                    <img src={roll_dice} alt='Roll Dice'/>
-                </button>
+                <RollDiceButton onClick={this.handleClick.bind(this)} />
                 { this.state.current_dice[0] !== -1 &&
                     <div className='dice-container'>
                         <div className='dice'>{this.getDiceImage(0)}</div>

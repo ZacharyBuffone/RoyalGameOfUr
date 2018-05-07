@@ -6,6 +6,9 @@ class GameNotification extends React.Component {
         super();
 
         this.notification_element = React.createRef();
+        this.state = {
+            last_message: null
+        }
     }
 
     componentDidMount() {
@@ -18,6 +21,16 @@ class GameNotification extends React.Component {
     onAnimationComplete() {
         this.props.onAnimationComplete();
         return;
+    }
+    componentDidUpdate() {
+        if(this.props.message !== this.state.last_message) {
+            this.setState({
+                last_message: this.props.message
+            });
+            this.notification_element.current.style.animation = 'none';
+            this.notification_element.current.offsetHeight;
+            this.notification_element.current.style.animation = null; 
+        }
     }
 
 

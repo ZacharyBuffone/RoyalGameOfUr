@@ -55,7 +55,7 @@ h1 {
 .pregame-window {
   position: fixed;
   z-index: 1;
-  border: 4px solid grey;
+  border: 3px solid black;
   border-radius: 10px;
   background: white;
   height:70%;
@@ -124,7 +124,12 @@ h1 {
 }
 
 .header {
-  margin-left: 20px;
+  background-color: #efefef;
+  margin-top: -10px;
+  padding-left: 20px;
+  height: fit-content;
+  width: 100%;
+
 }
 
 .header-block {
@@ -153,7 +158,7 @@ h1 {
 .game-notification {
   position: fixed;
   background: #c5c5c5;
-  border: 2px solid #555;
+  border: 2px solid black;
   height: 8.5vh;
   bottom: 0%;
   left: 50%;
@@ -192,7 +197,7 @@ h1 {
 }
 
 .game-board {
-  background: #cbcbcb;
+  background: white;
   position: fixed;
   height: 80%;
   width: 100%;

@@ -65,7 +65,7 @@ class GameStateManager {
             GameStateCommandAction.commandDiceChange(this.last_roll);
         }
 
-        if((this.addLastRoll() === 0) && (this.whose_turn == this.PlayerEnum.player2) && (this.is_ai_playing)) {
+        if((this.addLastRoll() === 0) && (this.whose_turn === this.PlayerEnum.player2) && (this.is_ai_playing)) {
             this.doAITurn();
         }
 
@@ -110,7 +110,7 @@ class GameStateManager {
         if ((player === 1 && this.player2_pos.includes(to)) || (player === 2 && this.player1_pos.includes(to))) {
             if (this.FlowerPositions.includes(to)) {
                 //the defending player is on a flower, reject move
-                MessageAction.addGameInfoMessage("The player you are trying to attack is on a rosette and is invinsible.");
+                MessageAction.addGameInfoMessage("The marker you are trying to attack is on a rosette and is invinsible.");
                 return;
             }
             //attack is valid, remove defending player marker

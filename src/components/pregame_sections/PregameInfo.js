@@ -4,7 +4,6 @@ import PregameAISelection from './PregameAISelection.js'
 import PregameNameSelection from './PregameNameSelection.js'
 import PregameFirstTurnRoll from './PregameFirstTurnRoll.js'
 import GameStateManager from '../../GameStateManager.js'
-import AIPlayer from '../../AIPlayer.js';
 
 class PregameInfo extends React.Component {
     constructor() {
