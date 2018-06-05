@@ -1,8 +1,8 @@
 {
-  "main.css": "static/css/main.ad9a38dc.css",
-  "main.css.map": "static/css/main.ad9a38dc.css.map",
-  "main.js": "static/js/main.c833bd88.js",
-  "main.js.map": "static/js/main.c833bd88.js.map",
+  "main.css": "static/css/main.d18c8206.css",
+  "main.css.map": "static/css/main.d18c8206.css.map",
+  "main.js": "static/js/main.9e4c376a.js",
+  "main.js.map": "static/js/main.9e4c376a.js.map",
   "static/media/babylonwithnoise.mp3": "static/media/babylonwithnoise.d6e921b1.mp3",
   "static/media/beige_finish.svg": "static/media/beige_finish.ed4d03dc.svg",
   "static/media/beige_marker.svg": "static/media/beige_marker.adff8bf7.svg",
@@ -13,6 +13,7 @@
   "static/media/grey_finish.svg": "static/media/grey_finish.5fad4c26.svg",
   "static/media/grey_marker.svg": "static/media/grey_marker.19104f78.svg",
   "static/media/grey_marker_highlighted.svg": "static/media/grey_marker_highlighted.9f4f2ba3.svg",
+  "static/media/player_route.PNG": "static/media/player_route.87b581e2.PNG",
   "static/media/roll_dice_button.svg": "static/media/roll_dice_button.b377a005.svg",
   "static/media/roll_dice_button_hover.svg": "static/media/roll_dice_button_hover.4b094924.svg",
   "static/media/stoneonstone.mp3": "static/media/stoneonstone.6f279720.mp3"
